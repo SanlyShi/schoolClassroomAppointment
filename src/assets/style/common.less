@@ -1,0 +1,166 @@
+html,
+body {
+  height: 100%;
+}
+html,
+body,
+div,
+p,
+b,
+li,
+h1,
+h2,
+textarea,
+span {
+  box-sizing: border-box;
+}
+body::before{
+  width: 100%;
+  height: 100%;
+  content: ' ';
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  background: #fff;
+}
+.box_flex {
+  display: flex;
+  display: -webkit-flex;
+  &.inline_flex {
+    display: inline-flex;
+  }
+  .grow_1 {
+    flex-grow: 1;
+  }
+  &.column {
+    flex-direction: column;
+  }
+  &.flex_between {
+    justify-content: space-between;
+  }
+  &.flex_wrap {
+    flex-wrap: wrap;
+  }
+  &.flex_shrink {
+    flex-shrink: 0;
+  }
+  .flex_shrink {
+    flex-shrink: 0;
+  }
+}
+.flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.justify_center {
+  justify-content: center;
+}
+.align_center {
+  align-items: center;
+}
+.gray{
+    color:#D6D6D6
+}
+
+//设置黄色背景变成白色背景：
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset !important;
+}  
+input:-webkit-autofill:focus {
+  box-shadow: 0 0 0px 1000px white inset !important;
+}  
+input {
+  font-size: 16px;
+  color: #303030 !important;
+}
+
+//设置透明：
+// input:-internal-autofill-previewed,
+// input:-internal-autofill-selected {
+//   font-size: 16px;
+//   color: #303030 !important;
+//   -webkit-text-fill-color: #FFFFFF !important;
+//   transition: background-color 5000s ease-in-out 0s !important;
+// }
+
+// 修改van-tab组件样式
+.container {
+  .st-tab {
+    .van-tab {
+      font-size: 18px;
+      font-weight: 400;
+    }
+    .van-tab--active {
+      font-size: 19px;
+      font-weight: 500;
+    }
+    .van-tabs__line {
+      box-shadow:0px 1px 2px 0px rgba(227,36,21,0.2);
+    }
+  }
+}
+
+.van-dialog {
+  border-radius: 10px !important;
+}
+// end vant组件样式修改 大部分在app.vue 
+
+
+#app .btn {
+  background: rgba(76, 118, 247, 1);
+  box-shadow: 0rem 0.05rem 0.21rem 0rem rgba(76, 118, 247, 0.35);
+  border-radius: 0.37rem;
+  outline: none;
+  border: none;
+  color: white;
+  font-size: 0.32rem;
+  padding: 0.15rem 0.61rem;
+  &.big{
+    width: 100%;
+    padding: .41rem;
+    text-align: center;
+  }
+}
+.form_title {
+  display: flex;
+  align-items: center;
+  border-bottom: 0.0267rem solid #f4f5f7;
+  padding: 0.2267rem 0;
+  .title_bar {
+    width: 0.11rem;
+    height: 0.56rem;
+    background: rgba(76, 118, 247, 1);
+    margin-right: 0.19rem;
+  }
+  font-size: 0.43rem;
+  font-weight: 600;
+  color: rgba(48, 49, 51, 1);
+}
+.form_row {
+  padding: 0.24rem 0.4rem;
+  display: flex;
+  .title {
+    font-size: 0.3733rem;
+    width: 1.6rem;
+    color: rgba(144, 147, 153, 1);
+    margin-right: 0.6133rem;
+    height: .5rem;
+    line-height: .5rem;
+    flex-shrink: 0;
+  }
+  .text {
+    font-size: 0.3733rem;
+    color: rgba(48, 49, 51, 1);
+    margin-right: 0.2667rem;
+    display: flex;
+    align-items: center
+  }
+}
+.detect_dialog{
+  &.van-dialog{
+    overflow: unset;
+  }
+}

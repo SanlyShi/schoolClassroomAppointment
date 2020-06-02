@@ -1,0 +1,83 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ${CICD_GIT_REPO_NAME}-nodeport
+  namespace: default
+spec:
+  selector:
+    app: ${CICD_GIT_REPO_NAME}
+  type: NodePort
+  ports:
+    - name: 9004tcp9004
+      nodePort: 9004
+      port: 9004
+      protocol: TCP
+      targetPort: 9004
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${CICD_GIT_REPO_NAME}
+  namespace: default
+  labels:
+    app: ${CICD_GIT_REPO_NAME}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${CICD_GIT_REPO_NAME}
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        field.cattle.io/ports: '[[{"containerPort":9004,"dnsName":"${CICD_GIT_REPO_NAME}-nodeport","kind":"NodePort","name":"9004tcp9004","protocol":"TCP","sourcePort":9004}]]'
+      labels:
+        app: ${CICD_GIT_REPO_NAME}
+    spec:
+      imagePullSecrets:
+        - name: pipeline-docker-registry
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: common-config
+                optional: false
+          image: ${CICD_IMAGE}:${CICD_GIT_BRANCH}-${CICD_EXECUTION_SEQUENCE}
+          imagePullPolicy: IfNotPresent
+          name: ${CICD_GIT_REPO_NAME}
+          ports:
+            - containerPort: 9004
+              name: 9004tcp9004
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: HealthCheck.html
+              port: 9004
+              scheme: HTTP
+            initialDelaySeconds: 300
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 2
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: HealthCheck.html
+              port: 9004
+              scheme: HTTP
+            initialDelaySeconds: 1
+            periodSeconds: 5
+            successThreshold: 2
+            timeoutSeconds: 2
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - "true"

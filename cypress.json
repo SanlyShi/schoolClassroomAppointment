@@ -1,0 +1,9 @@
+{
+  "pluginsFile": "tests/e2e/plugins/index.js",
+  "baseUrl": "http://localhost:8080", // 测试域名，这里可具体项目更改
+  "integrationFolder": "cypress/integration", // 测试文件存放目录
+  "testFiles": "**/*.cypress.spec.js", // 根据规则匹配具体测试文件，可根据喜好任意更改
+  "videoRecording": false, // 是否使用录制功能 需要的话具体去看官方介绍就好，这边暂时用不上
+  "viewportHeight": 800, // 测试浏览器视口高度
+  "viewportWidth": 1600 // 测试浏览器视口宽度}
+}
